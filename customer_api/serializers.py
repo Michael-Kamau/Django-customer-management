@@ -38,7 +38,7 @@ class CustomerBusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomerBusiness
-        fields = ['id', 'name', 'business_registration_date', 'business_category_id','business_category','customer_id','ward_id','building_floor','building_name','ward' ]
+        fields = ['id', 'name', 'business_registration_date', 'business_category_id','business_category','customer_id','ward_id','building_floor','building_name','ward','age_of_business' ]
         depth = 3
     def create(self, validated_data):
          customer_business = CustomerBusiness.objects.create(**validated_data)

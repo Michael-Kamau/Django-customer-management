@@ -62,7 +62,7 @@ class CustomerBusiness(models.Model):
     @property
     def age_of_business(self):
         from datetime import date
-        return (date.today() - self.business_registration_date).days
+        return str((date.today() - self.business_registration_date).days) + ' days'
 
     def __str__(self):
         return self.name

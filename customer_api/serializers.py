@@ -7,15 +7,25 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class CustomerBusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerBusiness
-        fields = ['id', 'customer', 'business_category', 'ward', 'name', 'business_registration_date','building_name','building_floor', 'age_of_business']
+        fields = '__all__'
+        depth = 3
+
+
 
 class CustomerSerializer(serializers.ModelSerializer):
-    country = CountrySerializer()
     businesses = CustomerBusinessSerializer(many=True, read_only= True)
+    country_id = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), write_only=True, source='country')
 
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = ['id', 'name', 'email', 'phone', 'country_id', 'date_of_birth','businesses','country']
+        depth = 1
+
+    def create(self, validated_data):
+         customer = Customer.objects.create(**validated_data)
+         return customer
+

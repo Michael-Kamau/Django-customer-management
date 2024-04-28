@@ -51,10 +51,12 @@ class Customer(models.Model):
         return self.name
 
 class CustomerBusiness(models.Model):
-    customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
+    customer = models.ForeignKey(Customer,related_name='businesses', on_delete = models.CASCADE)
     business_category = models.ForeignKey(BusinessCategory, on_delete = models.CASCADE)
     ward = models.ForeignKey(Ward, on_delete = models.CASCADE)
     name = models.CharField(max_length=20)
+    building_name = models.CharField(max_length=20, default='')
+    building_floor = models.CharField(max_length=20,default='')
     business_registration_date = models.DateField()
 
     @property

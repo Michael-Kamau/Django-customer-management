@@ -35,6 +35,18 @@ def customerDetail(request, id):
 
     elif request.method == 'DELETE':
         pass
+@api_view(['GET','POST'])
+def createCustomerBusiness(request):
+    if request.method == 'GET':
+         customer_businesses = CustomerBusiness.objects.all()
+         serializer = CustomerBusinessSerializer(customer_businesses, many = True)
+         return Response(serializer.data)
+    if request.method == 'POST':
+         serializer = CustomerBusinessSerializer(data=request.data)
+         if serializer.is_valid():
+             serializer.save()
+             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 @api_view(['GET','PUT','DELETE'])
 def customerBusinesses(request, id):
@@ -48,7 +60,7 @@ def customerBusinesses(request, id):
            serializer = CustomerBusinessSerializer(customer_businesses, many = True)
            return Response(serializer.data)
     elif request.method == 'POST':
-        serializer = CustomerSerializer(data=request.data)
+        serializer = CustomerBusinessSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
